@@ -1,0 +1,22 @@
+{
+    "name": "p2p/network",
+    "description": "P2P Web Application with WebRTC",
+    "type": "project",
+    "require": {
+        "php": ">=8.2",
+        "cboden/ratchet": "^0.4.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "P2P\\": "src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true
+    },
+    "scripts": {
+        "ws": "php server/websocket.php",
+        "test": "phpunit tests"
+    },
+    "minimum-stability": "stable"
+}

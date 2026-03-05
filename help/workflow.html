@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working Flow - P2P Network</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background: #f5f6fa; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; text-align: center; }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        
+        nav { background: #2d3436; padding: 15px 0; position: sticky; top: 0; z-index: 100; }
+        nav ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        nav a { color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #667eea; }
+        
+        .content { background: white; margin: 30px 0; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px; margin: 30px 0 20px; }
+        h3 { color: #764ba2; margin: 20px 0 10px; }
+        
+        pre { background: #2d3436; color: #dfe6e9; padding: 20px; border-radius: 5px; overflow-x: auto; margin: 15px 0; }
+        code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; }
+        pre code { background: none; padding: 0; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #667eea; color: white; }
+        
+        .flow-step { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px 35px; border-radius: 10px; text-align: center; min-width: 180px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .flow-arrow { font-size: 2.5em; color: #667eea; font-weight: bold; }
+        
+        .flow-container { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px; margin: 40px 0; }
+        
+        .step-number { background: white; color: #667eea; width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px; }
+        
+        .card { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #667eea; }
+        .card.info { border-left-color: #3498db; background: #f0f8ff; }
+        .card.success { border-left-color: #00b894; background: #f0fff4; }
+        
+        .diagram { background: white; border: 2px solid #667eea; border-radius: 10px; padding: 30px; margin: 20px 0; text-align: center; }
+        
+        footer { text-align: center; padding: 20px; color: #636e72; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📊 System Working Flow</h1>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="workflow.html" class="active">Working Flow</a></li>
+                <li><a href="structure.html">Code Structure</a></li>
+                <li><a href="files.html">File Reference</a></li>
+                <li><a href="installation.html">Installation</a></li>
+                <li><a href="guide.html">User Guide</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="content">
+            <h2>🔄 How the P2P System Works</h2>
+            
+            <p>The P2P Network application uses a <strong>hybrid architecture</strong> that combines:</p>
+            <ul>
+                <li><strong>Client-Server</strong> model for authentication and data storage</li>
+                <li><strong>WebSocket</strong> for real-time messaging</li>
+                <li><strong>WebRTC</strong> for direct peer-to-peer file transfer</li>
+            </ul>
+            
+            <!-- Authentication Flow -->
+            <h3><span class="step-number">1</span>User Authentication Flow</h3>
+            
+            <div class="flow-container">
+                <div class="flow-step">
+                    <strong>User Registration</strong><br>
+                    <small>POST /api/auth/register</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>Server Validates</strong><br>
+                    <small>Check username/email</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>Store in Database</strong><br>
+                    <small>Hash password with bcrypt</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>Generate JWT Token</strong><br>
+                    <small>Return to client</small>
+                </div>
+            </div>
+            
+            <div class="card info">
+                <h4>JWT Token Structure</h4>
+                <pre><code>{
+  "header": { "typ": "JWT", "alg": "HS256" },
+  "payload": {
+    "user_id": 1,
+    "username": "alice",
+    "email": "alice@p2p.local",
+    "iat": 1699000000,
+    "exp": 1699086400
+  },
+  "signature": "HMAC-SHA256 signature"
+}</code></pre>
+            </div>
+            
+            <!-- Messaging Flow -->
+            <h3><span class="step-number">2</span>Real-time Messaging Flow</h3>
+            
+            <div class="flow-container">
+                <div class="flow-step">
+                    <strong>User A</strong><br>
+                    <small>Sends message</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>WebSocket</strong><br>
+                    <small>Receives message</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>Lookup User B</strong><br>
+                    <small>Find connection</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>Forward Message</strong><br>
+                    <small>To User B</small>
+                </div>
+            </div>
+            
+            <table>
+                <tr>
+                    <th>Step</th>
+                    <th>Action</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Connect</td>
+                    <td>User opens browser and connects to WebSocket server</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Register</td>
+                    <td>Client sends register message with user_id</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Store</td>
+                    <td>Server stores socket connection mapped to user_id</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Send</td>
+                    <td>User types message and clicks send</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Forward</td>
+                    <td>Server finds target user socket and forwards message</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Receive</td>
+                    <td>Target user receives and displays message</td>
+                </tr>
+            </table>
+            
+            <!-- WebRTC Flow -->
+            <h3><span class="step-number">3</span>P2P Connection Flow (WebRTC)</h3>
+            
+            <div class="diagram">
+                <h4>WebRTC Signaling Process</h4>
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <strong>Alice</strong><br>
+                        <small>Creates Offer</small>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <strong>WebSocket</strong><br>
+                        <small>Signaling Server</small>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <strong>Bob</strong><br>
+                        <small>Receives Offer</small>
+                    </div>
+                </div>
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <strong>Bob</strong><br>
+                        <small>Creates Answer</small>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <strong>WebSocket</strong><br>
+                        <small>Signaling Server</small>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <strong>Alice</strong><br>
+                        <small>Receives Answer</small>
+                    </div>
+                </div>
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <strong>ICE Candidates</strong><br>
+                        <small>Exchanged via WebSocket</small>
+                    </div>
+                    <div class="flow-arrow">↔</div>
+                    <div class="flow-step">
+                        <strong>P2P Connection</strong><br>
+                        <small>Direct data channel established</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card success">
+                <h4>💡 What Happens During P2P Connection</h4>
+                <ol>
+                    <li><strong>User clicks "P2P" button</strong> - Initiates WebRTC connection</li>
+                    <li><strong>Browser creates RTCPeerConnection</strong> - With STUN servers</li>
+                    <li><strong>Creates SDP Offer</strong> - Session Description Protocol</li>
+                    <li><strong>Sends offer via WebSocket</strong> - To the other peer</li>
+                    <li><strong>Other peer receives offer</strong> - Creates answer</li>
+                    <li><strong>Exchange ICE candidates</strong> - Network paths</li>
+                    <li><strong>Direct P2P connection established</strong> - Data flows directly</li>
+                </ol>
+            </div>
+            
+            <!-- File Transfer Flow -->
+            <h3><span class="step-number">4</span>File Transfer Flow</h3>
+            
+            <div class="flow-container">
+                <div class="flow-step">
+                    <strong>Select File</strong><br>
+                    <small>User clicks attach</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>P2P Data Channel</strong><br>
+                    <small>File sent directly</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>Receive & Save</strong><br>
+                    <small>Browser downloads</small>
+                </div>
+            </div>
+            
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Small Files (<16KB)</td>
+                    <td>Sent as single data chunk via WebRTC DataChannel</td>
+                </tr>
+                <tr>
+                    <td>Large Files (>16KB)</td>
+                    <td>Chunked and sent in pieces with progress tracking</td>
+                </tr>
+            </table>
+            
+            <!-- Data Flow Summary -->
+            <h3><span class="step-number">5</span>Complete Data Flow Diagram</h3>
+            
+            <pre><code>┌─────────────────────────────────────────────────────────────────────────┐
+│                         COMPLETE SYSTEM FLOW                                │
+└─────────────────────────────────────────────────────────────────────────┘
+
+   BROWSER (Client A)              SERVER                  BROWSER (Client B)
+   ┌─────────────────┐         ┌─────────────┐          ┌─────────────────┐
+   │                 │         │             │          │                 │
+   │  ┌───────────┐  │         │  ┌───────┐  │          │  ┌───────────┐  │
+   │  │  Web App  │──┼────────►│  │  PHP  │  │◄─────────┼──│  Web App  │  │
+   │  │ (HTML/JS) │  │         │  │  API  │  │          │  │ (HTML/JS) │  │
+   │  └───────────┘  │         │  └───────┘  │          │  └───────────┘  │
+   │        │        │         │      │      │          │        │        │
+   │        │        │         │  ┌───────┐  │          │        │        │
+   │        │        │         │  │ MySQL │  │          │        │        │
+   │        │        │         │  │   DB  │  │          │        │        │
+   │        │        │         │  └───────┘  │          │        │        │
+   │        │        │         │      │      │          │        │        │
+   │  ┌───────────┐  │         │      │      │          │  ┌───────────┐  │
+   │  │WebSocket  │◄─┼─────────┼──────┴──────┼──────────┼─►│WebSocket  │  │
+   │  │  Client  │  │         │              │          │  │  Client  │  │
+   │  └───────────┘  │         │              │          │  └───────────┘  │
+   │        │        │         │              │          │        │        │
+   │        │        │         │   ┌───────┐  │          │        │        │
+   │  ┌───────────┐  │         │   │  STUN │  │          │  ┌───────────┐  │
+   │  │  WebRTC   │◄─┼─────────┼──►│ Server│◄─┼──────────┼─►│  WebRTC   │  │
+   │  │  (P2P)    │  │         │   └───────┘  │          │  │  (P2P)    │  │
+   │  └───────────┘  │         │              │          │  └───────────┘  │
+   └─────────────────┘         └─────────────┘          └─────────────────┘
+   
+   MESSAGE FLOW:            API FLOW:                    P2P FLOW:
+   A ──message──► WS ──forward──► B                   A ◄───P2P──────► B
+   B ──reply──►  WS ──forward──► A                   (Direct Connection)</code></pre>
+            
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2024 P2P Network Application - Documentation</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Structure - P2P Network</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background: #f5f6fa; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; text-align: center; }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        
+        nav { background: #2d3436; padding: 15px 0; position: sticky; top: 0; z-index: 100; }
+        nav ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        nav a { color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #667eea; }
+        
+        .content { background: white; margin: 30px 0; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px; margin: 30px 0 20px; }
+        h3 { color: #764ba2; margin: 20px 0 10px; }
+        
+        .tree { font-family: 'Consolas', 'Monaco', monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 15px 0; font-size: 14px; }
+        .tree .folder { color: #dcdcaa; font-weight: bold; }
+        .tree .file { color: #9cdcfe; }
+        .tree .ext-php { color: #4ec9b0; }
+        .tree .ext-js { color: #dcdcaa; }
+        .tree .ext-css { color: #569cd6; }
+        .tree .ext-html { color: #ce9178; }
+        .tree .ext-sql { color: #d7ba7d; }
+        
+        .folder-card { background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; margin: 15px 0; border-radius: 5px; }
+        .folder-card h4 { color: #667eea; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #667eea; color: white; }
+        tr:hover { background: #f5f6fa; }
+        
+        .card { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #667eea; }
+        
+        footer { text-align: center; padding: 20px; color: #636e72; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📁 Code Structure</h1>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="workflow.html" class="active">Working Flow</a></li>
+                <li><a href="structure.html">Code Structure</a></li>
+                <li><a href="files.html">File Reference</a></li>
+                <li><a href="installation.html">Installation</a></li>
+                <li><a href="guide.html">User Guide</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="content">
+            <h2>📂 Project Folder Structure</h2>
+            
+            <div class="tree">
+p2p/                              ← Project Root<br>
+├── <span class="folder">config/</span>                       ← Configuration files<br>
+│   ├── config.php                 ← Application settings<br>
+│   └── database.sql               ← Database schema<br>
+│<br>
+├── <span class="folder">public/</span>                       ← Web root (served by Apache/PHP)<br>
+│   ├── index.php                  ← Main entry point<br>
+│   ├── index.html                 ← Frontend HTML<br>
+│   ├── autoload.php               ← Class autoloader<br>
+│   ├── .htaccess                  ← Apache configuration<br>
+│   ├── <span class="folder">css/</span><br>
+│   │   └── styles.css              ← Styling<br>
+│   └── <span class="folder">js/</span><br>
+│       └── app.js                  ← Frontend JavaScript<br>
+│<br>
+├── <span class="folder">server/</span>                       ← Server-side programs<br>
+│   └── websocket.php               ← WebSocket server<br>
+│<br>
+├── <span class="folder">src/</span>                         ← PHP source code<br>
+│   ├── <span class="folder">Auth/</span>                    ← Authentication classes<br>
+│   │   ├── JWT.php                 ← JWT token handler<br>
+│   │   └── Authenticator.php       ← User authentication<br>
+│   │<br>
+│   ├── <span class="folder">Controllers/</span>             ← API controllers<br>
+│   │   └── ApiController.php       ← REST API endpoints<br>
+│   │<br>
+│   ├── <span class="folder">Core/</span>                    ← Core utilities<br>
+│   │   ├── Config.php              ← Configuration loader<br>
+│   │   ├── Database.php            ← Database connection<br>
+│   │   └── Router.php              ← HTTP router<br>
+│   │<br>
+│   └── <span class="folder">Models/</span>                  ← Database models<br>
+│       ├── User.php                ← User model<br>
+│       ├── Message.php             ← Message model<br>
+│       └── Peer.php                ← Peer/connection model<br>
+│<br>
+├── <span class="folder">logs/</span>                        ← Application logs<br>
+├── <span class="folder">uploads/</span>                     ← File uploads<br>
+├── <span class="folder">help/</span>                        ← Documentation<br>
+│<br>
+├── composer.json                  ← Composer dependencies<br>
+└── README.md                      ← Project readme
+            </div>
+            
+            <!-- Folder Explanations -->
+            <h3>📋 Folder Purpose Details</h3>
+            
+            <div class="folder-card">
+                <h4>📂 config/</h4>
+                <p>Contains all configuration files for the application.</p>
+                <ul>
+                    <li><strong>config.php</strong> - Main application configuration (database, auth, WebSocket, P2P settings)</li>
+                    <li><strong>database.sql</strong> - MySQL database schema with all tables and sample data</li>
+                </ul>
+            </div>
+            
+            <div class="folder-card">
+                <h4>📂 public/</h4>
+                <p>The web root directory that is served to users. Contains all frontend files.</p>
+                <ul>
+                    <li><strong>index.php</strong> - Main entry point that handles all HTTP requests</li>
+                    <li><strong>index.html</strong> - Single-page application HTML</li>
+                    <li><strong>autoload.php</strong> - PSR-4 style class autoloader</li>
+                    <li><strong>css/styles.css</strong> - All application styling</li>
+                    <li><strong>js/app.js</strong> - Frontend JavaScript with WebSocket and WebRTC</li>
+                </ul>
+            </div>
+            
+            <div class="folder-card">
+                <h4>📂 server/</h4>
+                <p>Contains server-side programs that run separately from the web server.</p>
+                <ul>
+                    <li><strong>websocket.php</strong> - WebSocket server for real-time messaging and signaling</li>
+                </ul>
+            </div>
+            
+            <div class="folder-card">
+                <h4>📂 src/</h4>
+                <p>PHP source code following PSR-4 autoloading standards.</p>
+                
+                <h5 style="margin-top:15px;">src/Auth/</h5>
+                <ul>
+                    <li><strong>JWT.php</strong> - JSON Web Token generation and validation</li>
+                    <li><strong>Authenticator.php</strong> - User registration, login, logout handling</li>
+                </ul>
+                
+                <h5 style="margin-top:15px;">src/Controllers/</h5>
+                <ul>
+                    <li><strong>ApiController.php</strong> - All REST API endpoints</li>
+                </ul>
+                
+                <h5 style="margin-top:15px;">src/Core/</h5>
+                <ul>
+                    <li><strong>Config.php</strong> - Configuration loader and manager</li>
+                    <li><strong>Database.php</strong> - PDO database connection wrapper</li>
+                    <li><strong>Router.php</strong> - HTTP request router</li>
+                </ul>
+                
+                <h5 style="margin-top:15px;">src/Models/</h5>
+                <ul>
+                    <li><strong>User.php</strong> - User data operations</li>
+                    <li><strong>Message.php</strong> - Message storage and retrieval</li>
+                    <li><strong>Peer.php</strong> - Peer connections management</li>
+                </ul>
+            </div>
+            
+            <div class="folder-card">
+                <h4>📂 logs/</h4>
+                <p>Application log files for debugging and monitoring.</p>
+            </div>
+            
+            <div class="folder-card">
+                <h4>📂 uploads/</h4>
+                <p>Directory for user-uploaded files (if implementing file upload feature).</p>
+            </div>
+            
+            <!-- Technology Stack -->
+            <h3>🛠️ Technology Stack</h3>
+            
+            <table>
+                <tr>
+                    <th>Layer</th>
+                    <th>Technology</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Frontend</td>
+                    <td>HTML5, CSS3, JavaScript</td>
+                    <td>User interface</td>
+                </tr>
+                <tr>
+                    <td>Backend</td>
+                    <td>PHP 8.2+</td>
+                    <td>Server logic</td>
+                </tr>
+                <tr>
+                    <td>Database</td>
+                    <td>MySQL 5.7+</td>
+                    <td>Data storage</td>
+                </tr>
+                <tr>
+                    <td>Real-time</td>
+                    <td>WebSocket (PHP Sockets)</td>
+                    <td>Instant messaging</td>
+                </tr>
+                <tr>
+                    <td>P2P</td>
+                    <td>WebRTC</td>
+                    <td>Direct file transfer</td>
+                </tr>
+                <tr>
+                    <td>Auth</td>
+                    <td>JWT (JSON Web Tokens)</td>
+                    <td>Secure authentication</td>
+                </tr>
+            </table>
+            
+            <!-- MVC Pattern -->
+            <h3>🏗️ MVC Architecture</h3>
+            
+            <div class="card">
+                <p>This application follows the <strong>Model-View-Controller (MVC)</strong> design pattern:</p>
+                
+                <table>
+                    <tr>
+                        <th>Component</th>
+                        <th>Location</th>
+                        <th>Responsibility</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Model</strong></td>
+                        <td>src/Models/</td>
+                        <td>Data operations and business logic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>View</strong></td>
+                        <td>public/</td>
+                        <td>User interface (HTML, CSS, JS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Controller</strong></td>
+                        <td>src/Controllers/</td>
+                        <td>Request handling and response</td>
+                    </tr>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2024 P2P Network Application - Documentation</p>
+    </footer>
+</body>
+</html>

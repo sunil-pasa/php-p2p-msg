@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Reference - P2P Network</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background: #f5f6fa; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; text-align: center; }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        
+        nav { background: #2d3436; padding: 15px 0; position: sticky; top: 0; z-index: 100; }
+        nav ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        nav a { color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #667eea; }
+        
+        .content { background: white; margin: 30px 0; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px; margin: 30px 0 20px; }
+        h3 { color: #764ba2; margin: 20px 0 10px; }
+        
+        pre { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 5px; overflow-x: auto; margin: 15px 0; }
+        code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; }
+        pre code { background: none; padding: 0; font-size: 13px; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; vertical-align: top; }
+        th { background: #667eea; color: white; }
+        tr:hover { background: #f5f6fa; }
+        
+        .file-card { background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; margin: 15px 0; border-radius: 5px; }
+        .file-card h4 { color: #667eea; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .file-card .path { background: #e9ecef; padding: 5px 10px; border-radius: 3px; font-family: monospace; font-size: 12px; }
+        
+        .card { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #667eea; }
+        
+        footer { text-align: center; padding: 20px; color: #636e72; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📄 File Reference Guide</h1>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="workflow.html">Working Flow</a></li>
+                <li><a href="structure.html">Code Structure</a></li>
+                <li><a href="files.html" class="active">File Reference</a></li>
+                <li><a href="installation.html">Installation</a></li>
+                <li><a href="guide.html">User Guide</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="content">
+            <h2>📄 Detailed File Explanations</h2>
+            
+            <!-- config/config.php -->
+            <div class="file-card">
+                <h4>config/config.php</h4>
+                <p class="path">config/config.php</p>
+                <p>Main configuration file that contains all application settings.</p>
+                
+                <h5>Key Configuration Sections:</h5>
+                <pre><code>return [
+    // Application settings
+    'app' => [
+        'name' => 'P2P Network',
+        'env' => 'development',
+        'url' => 'http://localhost:8080',
+    ],
+    
+    // Database configuration
+    'database' => [
+        'driver' => 'mysql',
+        'host' => '127.0.0.1',
+        'database' => 'p2p_network',
+        'username' => 'root',
+        'password' => '',
+    ],
+    
+    // JWT settings
+    'auth' => [
+        'jwt_secret' => 'your-secret-key',
+        'jwt_expiry' => 86400,
+    ],
+    
+    // WebSocket server
+    'websocket' => [
+        'host' => '127.0.0.1',
+        'port' => 8081,
+    ],
+    
+    // WebRTC/STUN servers
+    'p2p' => [
+        'stun_servers' => ['stun:stun.l.google.com:19302'],
+    ],
+];</code></pre>
+            </div>
+            
+            <!-- config/database.sql -->
+            <div class="file-card">
+                <h4>config/database.sql</h4>
+                <p class="path">config/database.sql</p>
+                <p>MySQL database schema that creates all required tables.</p>
+                
+                <h5>Tables Created:</h5>
+                <ul>
+                    <li><strong>users</strong> - User accounts (id, username, email, password_hash, display_name, avatar, is_online)</li>
+                    <li><strong>sessions</strong> - User sessions (token, expires_at)</li>
+                    <li><strong>peer_connections</strong> - Peer connections (user_one_id, user_two_id, status)</li>
+                    <li><strong>messages</strong> - Chat messages (sender_id, receiver_id, content, message_type)</li>
+                    <li><strong>ice_candidates</strong> - WebRTC ICE candidates for signaling</li>
+                    <li><strong>online_peers</strong> - Currently online users (user_id, socket_id, peer_id)</li>
+                </ul>
+                
+                <h5>Sample Data:</h5>
+                <pre><code>-- Pre-created test users (password: 'password')
+INSERT INTO users (username, email, password_hash, display_name) VALUES
+('admin', 'admin@p2p.local', '$2y$10$92IX...', 'Admin User'),
+('alice', 'alice@p2p.local', '$2y$10$92IX...', 'Alice'),
+('bob', 'bob@p2p.local', '$2y$10$92IX...', 'Bob');</code></pre>
+            </div>
+            
+            <!-- public/index.php -->
+            <div class="file-card">
+                <h4>public/index.php</h4>
+                <p class="path">public/index.php</p>
+                <p>Main entry point that handles all HTTP requests and routes them to appropriate handlers.</p>
+                
+                <h5>Key Functions:</h5>
+                <ul>
+                    <li>Loads configuration and initializes database</li>
+                    <li>Handles CORS headers for API requests</li>
+                    <li>Routes requests to ApiController for API endpoints</li>
+                    <li>Serves static files (CSS, JS, images)</li>
+                    <li>Serves index.html for frontend</li>
+                </ul>
+            </div>
+            
+            <!-- public/autoload.php -->
+            <div class="file-card">
+                <h4>public/autoload.php</h4>
+                <p class="path">public/autoload.php</p>
+                <p>Simple PSR-4 style autoloader that loads PHP classes on demand.</p>
+                
+                <pre><code>spl_autoload_register(function ($class) {
+    $prefix = 'P2P\\';
+    $baseDir = __DIR__ . '/../src/';
+    
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        return;
+    }
+    
+    $relativeClass = substr($class, $len);
+    $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
+    
+    if (file_exists($file)) {
+        require $file;
+    }
+});</code></pre>
+            </div>
+            
+            <!-- src/Core/Config.php -->
+            <div class="file-card">
+                <h4>src/Core/Config.php</h4>
+                <p class="path">src/Core/Config.php</p>
+                <p>Configuration manager class that loads and provides access to configuration values.</p>
+                
+                <h5>Key Methods:</h5>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>Config::init()</code></td>
+                        <td>Initialize configuration from file</td>
+                    </tr>
+                    <tr>
+                        <td><code>Config::get($key, $default)</code></td>
+                        <td>Get config value (supports dot notation)</td>
+                    </tr>
+                    <tr>
+                        <td><code>Config::set($key, $value)</code></td>
+                        <td>Set config value</td>
+                    </tr>
+                </table>
+                
+                <h5>Usage:</h5>
+                <pre><code>// Get database host
+$host = Config::get('database.host', 'localhost');
+
+// Get nested value
+$jwtSecret = Config::get('auth.jwt_secret');</code></pre>
+            </div>
+            
+            <!-- src/Core/Database.php -->
+            <div class="file-card">
+                <h4>src/Core/Database.php</h4>
+                <p class="path">src/Core/Database.php</p>
+                <p>PDO wrapper class for MySQL database operations with singleton pattern.</p>
+                
+                <h5>Key Methods:</h5>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>Database::getInstance()</code></td>
+                        <td>Get singleton instance</td>
+                    </tr>
+                    <tr>
+                        <td><code>Database::query($sql, $params)</code></td>
+                        <td>Execute query with parameters</td>
+                    </tr>
+                    <tr>
+                        <td><code>Database::fetch($sql, $params)</code></td>
+                        <td>Fetch single row</td>
+                    </tr>
+                    <tr>
+                        <td><code>Database::fetchAll($sql, $params)</code></td>
+                        <td>Fetch all rows</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- src/Core/Router.php -->
+            <div class="file-card">
+                <h4>src/Core/Router.php</h4>
+                <p class="path">src/Core/Router.php</p>
+                <p>HTTP request router that maps URLs to handler functions.</p>
+                
+                <h5>Usage:</h5>
+                <pre><code>$router = new Router();
+
+// Define routes
+$router->get('/api/users', [$this, 'getUsers']);
+$router->post('/api/users', [$this, 'createUser']);
+$router->put('/api/users/{id}', [$this, 'updateUser']);
+$router->delete('/api/users/{id}', [$this, 'deleteUser']);
+
+// Dispatch request
+$router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);</code></pre>
+            </div>
+            
+            <!-- src/Auth/JWT.php -->
+            <div class="file-card">
+                <h4>src/Auth/JWT.php</h4>
+                <p class="path">src/Auth/JWT.php</p>
+                <p>JSON Web Token handler for secure authentication.</p>
+                
+                <h5>Key Methods:</h5>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>JWT::encode($payload)</code></td>
+                        <td>Generate JWT token</td>
+                    </tr>
+                    <tr>
+                        <td><code>JWT::decode($token)</code></td>
+                        <td>Validate and decode token</td>
+                    </tr>
+                    <tr>
+                        <td><code>JWT::extractFromHeader($header)</code></td>
+                        <td>Extract token from Authorization header</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- src/Auth/Authenticator.php -->
+            <div class="file-card">
+                <h4>src/Auth/Authenticator.php</h4>
+                <p class="path">src/Auth/Authenticator.php</p>
+                <p>Handles user authentication (registration, login, logout).</p>
+                
+                <h5>Key Methods:</h5>
+                <ul>
+                    <li><code>register($username, $email, $password)</code> - Create new user account</li>
+                    <li><code>login($username, $password)</code> - Authenticate user</li>
+                    <li><code>logout($userId)</code> - End user session</li>
+                    <li><code>validateToken($token)</code> - Verify JWT token</li>
+                    <li><code>getCurrentUser($token)</code> - Get authenticated user</li>
+                </ul>
+            </div>
+            
+            <!-- src/Models/ -->
+            <div class="file-card">
+                <h4>src/Models/*.php</h4>
+                <p class="path">src/Models/</p>
+                <p>Database model classes for data operations.</p>
+                
+                <h5>User.php:</h5>
+                <ul>
+                    <li><code>create($username, $email, $password)</code> - Create new user</li>
+                    <li><code>findById($id)</code>, <code>findByUsername($name)</code> - Find users</li>
+                    <li><code>getOnlineUsers()</code> - Get all online users</li>
+                    <li><code>search($query)</code> - Search users</li>
+                    <li><code>verifyPassword($password)</code> - Verify user password</li>
+                </ul>
+                
+                <h5>Message.php:</h5>
+                <ul>
+                    <li><code>send($senderId, $receiverId, $content, $type)</code> - Send message</li>
+                    <li><code>getConversation($userId, $otherUserId)</code> - Get chat history</li>
+                    <li><code>getConversations($userId)</code> - Get all conversations</li>
+                    <li><code>markAsRead($receiverId, $senderId)</code> - Mark as read</li>
+                </ul>
+                
+                <h5>Peer.php:</h5>
+                <ul>
+                    <li><code>requestConnection($fromUserId, $toUserId)</code> - Send connection request</li>
+                    <li><code>acceptConnection($fromUserId, $toUserId)</code> - Accept request</li>
+                    <li><code>getConnections($userId)</code> - Get user's connections</li>
+                    <li><code>discoverPeers($userId)</code> - Find new peers</li>
+                </ul>
+            </div>
+            
+            <!-- src/Controllers/ApiController.php -->
+            <div class="file-card">
+                <h4>src/Controllers/ApiController.php</h4>
+                <p class="path">src/Controllers/ApiController.php</p>
+                <p>Main API controller that handles all REST API endpoints.</p>
+                
+                <h5>API Endpoints:</h5>
+                <table>
+                    <tr>
+                        <th>Endpoint</th>
+                        <th>Method</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>/api/auth/register</td>
+                        <td>POST</td>
+                        <td>Register new user</td>
+                    </tr>
+                    <tr>
+                        <td>/api/auth/login</td>
+                        <td>POST</td>
+                        <td>User login</td>
+                    </tr>
+                    <tr>
+                        <td>/api/auth/logout</td>
+                        <td>POST</td>
+                        <td>User logout</td>
+                    </tr>
+                    <tr>
+                        <td>/api/users/me</td>
+                        <td>GET</td>
+                        <td>Get current user</td>
+                    </tr>
+                    <tr>
+                        <td>/api/peers/discover</td>
+                        <td>GET</td>
+                        <td>Discover peers</td>
+                    </tr>
+                    <tr>
+                        <td>/api/messages/conversations</td>
+                        <td>GET</td>
+                        <td>Get conversations</td>
+                    </tr>
+                    <tr>
+                        <td>/api/messages/chat/{id}</td>
+                        <td>GET</td>
+                        <td>Get chat messages</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- server/websocket.php -->
+            <div class="file-card">
+                <h4>server/websocket.php</h4>
+                <p class="path">server/websocket.php</p>
+                <p>WebSocket server for real-time messaging and WebRTC signaling.</p>
+                
+                <h5>Key Features:</h5>
+                <ul>
+                    <li>User registration and connection management</li>
+                    <li>Real-time message forwarding</li>
+                    <li>WebRTC signaling (offer, answer, ICE candidates)</li>
+                    <li>Typing indicators</li>
+                    <li>User online/offline status broadcasting</li>
+                </ul>
+                
+                <h5>Message Types:</h5>
+                <pre><code>{
+  "type": "register",      // Register user with socket
+  "type": "message",       // Chat message
+  "type": "typing",        // Typing indicator
+  "type": "offer",         // WebRTC offer
+  "type": "answer",        // WebRTC answer
+  "type": "ice-candidate"  // WebRTC ICE candidate
+}</code></pre>
+            </div>
+            
+            <!-- public/js/app.js -->
+            <div class="file-card">
+                <h4>public/js/app.js</h4>
+                <p class="path">public/js/app.js</p>
+                <p>Frontend JavaScript application handling all client-side logic.</p>
+                
+                <h5>Key Classes/Functions:</h5>
+                <ul>
+                    <li><strong>P2PApp class</strong> - Main application controller</li>
+                    <li><code>login(username, password)</code> - User login</li>
+                    <li><code>register(username, email, password)</code> - User registration</li>
+                    <li><code>connectWebSocket()</code> - Establish WebSocket connection</li>
+                    <li><code>startP2PConnection(userId)</code> - Initiate WebRTC</li>
+                    <li><code>sendFile(file)</code> - Send file via P2P</li>
+                    <li><code>loadPeers(), loadConversations(), loadChat()</code> - Data loading</li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2024 P2P Network Application - Documentation</p>
+    </footer>
+</body>
+</html>

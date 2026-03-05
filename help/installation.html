@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Guide - P2P Network</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background: #f5f6fa; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; text-align: center; }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        
+        nav { background: #2d3436; padding: 15px 0; position: sticky; top: 0; z-index: 100; }
+        nav ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        nav a { color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #667eea; }
+        
+        .content { background: white; margin: 30px 0; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px; margin: 30px 0 20px; }
+        h3 { color: #764ba2; margin: 20px 0 10px; }
+        
+        pre { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 5px; overflow-x: auto; margin: 15px 0; }
+        code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; }
+        pre code { background: none; padding: 0; }
+        
+        .step { background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea; }
+        .step-number { background: #667eea; color: white; width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px; }
+        
+        .card { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #667eea; }
+        .card.warning { border-left-color: #f39c12; background: #fffbf0; }
+        .card.success { border-left-color: #00b894; background: #f0fff4; }
+        .card.info { border-left-color: #3498db; background: #f0f8ff; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #667eea; color: white; }
+        
+        ul { margin: 15px 0 15px 30px; }
+        li { margin: 8px 0; }
+        
+        footer { text-align: center; padding: 20px; color: #636e72; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>⚙️ Installation Guide</h1>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="workflow.html">Working Flow</a></li>
+                <li><a href="structure.html">Code Structure</a></li>
+                <li><a href="files.html">File Reference</a></li>
+                <li><a href="installation.html" class="active">Installation</a></li>
+                <li><a href="guide.html">User Guide</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="content">
+            <h2>🚀 Complete Installation Guide</h2>
+            
+            <div class="card info">
+                <h3>📋 Prerequisites</h3>
+                <ul>
+                    <li><strong>XAMPP</strong> (or any Apache/MySQL/PHP stack)</li>
+                    <li><strong>PHP 8.2+</strong> with sockets extension</li>
+                    <li><strong>MySQL 5.7+</strong></li>
+                    <li><strong>Web browser</strong> with WebRTC support (Chrome, Firefox, Edge)</li>
+                </ul>
+            </div>
+            
+            <!-- Step 1 -->
+            <div class="step">
+                <h3><span class="step-number">1</span>Enable PHP Sockets Extension</h3>
+                
+                <ol>
+                    <li>Open php.ini file: <code>C:\xampp\php\php.ini</code></li>
+                    <li>Find this line: <code>;extension=sockets</code></li>
+                    <li>Remove the semicolon (;) to enable it:</li>
+                </ol>
+                
+                <pre><code>;extension=sockets
+ Change to:
+extension=sockets</code></pre>
+                
+                <div class="card warning">
+                    ⚠️ After enabling, you may need to restart Apache or any running PHP processes.
+                </div>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="step">
+                <h3><span class="step-number">2</span>Setup MySQL Database</h3>
+                
+                <ol>
+                    <li>Open phpMyAdmin: <a href="http://localhost/phpmyadmin" target="_blank">http://localhost/phpmyadmin</a></li>
+                    <li>Click on "New Database" to create a new database</li>
+                    <li>Enter database name: <code>p2p_network</code></li>
+                    <li>Select collation: <code>utf8mb4_unicode_ci</code></li>
+                    <li>Click "Create"</li>
+                    <li>Click on the newly created database</li>
+                    <li>Go to "Import" tab</li>
+                    <li>Select the file: <code>config/database.sql</code></li>
+                    <li>Click "Go" to import</li>
+                </ol>
+                
+                <div class="card success">
+                    ✅ Database is ready with sample users (admin, alice, bob) - all with password: <code>password</code>
+                </div>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="step">
+                <h3><span class="step-number">3</span>Configure Database Credentials</h3>
+                
+                <ol>
+                    <li>Open <code>config/config.php</code></li>
+                    <li>Update database credentials:</li>
+                </ol>
+                
+                <pre><code>'database' => [
+    'driver' => 'mysql',
+    'host' => '127.0.0.1',
+    'port' => 3306,
+    'database' => 'p2p_network',
+    'username' => 'root',        // Your MySQL username
+    'password' => '',            // Your MySQL password
+    'charset' => 'utf8mb4',
+],</code></pre>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="step">
+                <h3><span class="step-number">4</span>Create Required Directories</h3>
+                
+                <p>Create these empty folders in the project root:</p>
+                <ul>
+                    <li><code>logs/</code> - For application logs</li>
+                    <li><code>uploads/</code> - For file uploads</li>
+                </ul>
+            </div>
+            
+            <!-- Step 5 -->
+            <div class="step">
+                <h3><span class="step-number">5</span>Start WebSocket Server</h3>
+                
+                <p>Open a terminal and run:</p>
+                
+                <pre><code>c:\xampp\php\php.exe c:\xampp\htdocs\test\kilo\p2p\server\websocket.php</code></pre>
+                
+                <div class="card success">
+                    Expected output:<br>
+                    <code>P2P WebSocket Server started on ws://127.0.0.1:8081</code><br>
+                    <code>Waiting for connections...</code>
+                </div>
+                
+                <div class="card warning">
+                    ⚠️ Keep this terminal open! The WebSocket server must keep running.
+                </div>
+            </div>
+            
+            <!-- Step 6 -->
+            <div class="step">
+                <h3><span class="step-number">6</span>Start PHP Development Server</h3>
+                
+                <p>Open a <strong>NEW</strong> terminal and run:</p>
+                
+                <pre><code>c:\xampp\php\php.exe -S localhost:8080 -t c:\xampp\htdocs\test\kilo\p2p\public</code></pre>
+                
+                <p>Or use XAMPP Apache:</p>
+                <ol>
+                    <li>Open XAMPP Control Panel</li>
+                    <li>Click "Config" next to Apache</li>
+                    <li>Select "httpd.conf"</li>
+                    <li>Add a virtual host or set DocumentRoot to <code>c:\xampp\htdocs\test\kilo\p2p\public</code></li>
+                    <li>Start Apache</li>
+                </ol>
+            </div>
+            
+            <!-- Step 7 -->
+            <div class="step">
+                <h3><span class="step-number">7</span>Access the Application</h3>
+                
+                <p>Open your web browser and navigate to:</p>
+                
+                <pre><code>http://localhost:8080</code></pre>
+                
+                <div class="card success">
+                    ✅ Installation complete! You should see the login page.
+                </div>
+            </div>
+            
+            <!-- Testing -->
+            <h2>🧪 Testing the Application</h2>
+            
+            <div class="step">
+                <h3>How to Test</h3>
+                
+                <ol>
+                    <li>Login with sample accounts:
+                        <ul>
+                            <li>Username: <code>admin</code>, Password: <code>password</code></li>
+                            <li>Username: <code>alice</code>, Password: <code>password</code></li>
+                            <li>Username: <code>bob</code>, Password: <code>password</code></li>
+                        </ul>
+                    </li>
+                    <li>Open a second browser window (or incognito mode)</li>
+                    <li>Login with a different account</li>
+                    <li>Connect with the other user</li>
+                    <li>Send messages</li>
+                </ol>
+            </div>
+            
+            <!-- Troubleshooting -->
+            <h2>🔧 Troubleshooting</h2>
+            
+            <table>
+                <tr>
+                    <th>Error</th>
+                    <th>Solution</th>
+                </tr>
+                <tr>
+                    <td>socket_create() not found</td>
+                    <td>Enable PHP sockets extension in php.ini</td>
+                </tr>
+                <tr>
+                    <td>Database connection error</td>
+                    <td>Check database credentials in config/config.php</td>
+                </tr>
+                <tr>
+                    <td>WebSocket connection failed</td>
+                    <td>Make sure WebSocket server is running on port 8081</td>
+                </tr>
+                <tr>
+                    <td>Messages not sending</td>
+                    <td>Check browser console (F12) for JavaScript errors</td>
+                </tr>
+                <tr>
+                    <td>P2P connection failed</td>
+                    <td>Use HTTPS in production; check STUN server settings</td>
+                </tr>
+            </table>
+            
+            <!-- Quick Reference -->
+            <h2>📋 Quick Reference Commands</h2>
+            
+            <table>
+                <tr>
+                    <th>Action</th>
+                    <th>Command</th>
+                </tr>
+                <tr>
+                    <td>Start WebSocket</td>
+                    <td><code>php server/websocket.php</code></td>
+                </tr>
+                <tr>
+                    <td>Start PHP Server</td>
+                    <td><code>php -S localhost:8080 -t public</code></td>
+                </tr>
+                <tr>
+                    <td>WebSocket URL</td>
+                    <td><code>ws://127.0.0.1:8081</code></td>
+                </tr>
+                <tr>
+                    <td>App URL</td>
+                    <td><code>http://localhost:8080</code></td>
+                </tr>
+            </table>
+            
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2024 P2P Network Application - Documentation</p>
+    </footer>
+</body>
+</html>

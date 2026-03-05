@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide - P2P Network</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background: #f5f6fa; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; text-align: center; }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        
+        nav { background: #2d3436; padding: 15px 0; position: sticky; top: 0; z-index: 100; }
+        nav ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        nav a { color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #667eea; }
+        
+        .content { background: white; margin: 30px 0; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px; margin: 30px 0 20px; }
+        h3 { color: #764ba2; margin: 20px 0 10px; }
+        
+        .step { background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea; }
+        .step-number { background: #667eea; color: white; width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px; }
+        
+        .card { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #667eea; }
+        .card.success { border-left-color: #00b894; background: #f0fff4; }
+        .card.info { border-left-color: #3498db; background: #f0f8ff; }
+        .card.warning { border-left-color: #f39c12; background: #fffbf0; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #667eea; color: white; }
+        
+        ul { margin: 15px 0 15px 30px; }
+        li { margin: 8px 0; }
+        
+        .screenshot { background: #eee; padding: 20px; text-align: center; border-radius: 8px; margin: 20px 0; }
+        
+        footer { text-align: center; padding: 20px; color: #636e72; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>👤 User Guide</h1>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="workflow.html">Working Flow</a></li>
+                <li><a href="structure.html">Code Structure</a></li>
+                <li><a href="files.html">File Reference</a></li>
+                <li><a href="installation.html">Installation</a></li>
+                <li><a href="guide.html" class="active">User Guide</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="content">
+            <h2>📖 How to Use the P2P Network Application</h2>
+            
+            <div class="card info">
+                <h3>Quick Overview</h3>
+                <p>This guide explains how to use the P2P Network application for messaging and file sharing with other users.</p>
+            </div>
+            
+            <!-- Login/Register -->
+            <div class="step">
+                <h3><span class="step-number">1</span>Login or Register</h3>
+                
+                <h4>Option A: Use Existing Account</h4>
+                <p>If you imported the database, you can use these test accounts:</p>
+                <table>
+                    <tr>
+                        <th>Username</th>
+                        <th>Password</th>
+                    </tr>
+                    <tr>
+                        <td>admin</td>
+                        <td>password</td>
+                    </tr>
+                    <tr>
+                        <td>alice</td>
+                        <td>password</td>
+                    </tr>
+                    <tr>
+                        <td>bob</td>
+                        <td>password</td>
+                    </tr>
+                </table>
+                
+                <h4>Option B: Register New Account</h4>
+                <ol>
+                    <li>Click the "Register" tab</li>
+                    <li>Enter a username (e.g., "john")</li>
+                    <li>Enter your email (e.g., "john@example.com")</li>
+                    <li>Enter a password (at least 6 characters)</li>
+                    <li>Click "Register"</li>
+                </ol>
+            </div>
+            
+            <!-- Main Interface -->
+            <div class="step">
+                <h3><span class="step-number">2</span>Understanding the Interface</h3>
+                
+                <p>After logging in, you'll see the main interface:</p>
+                
+                <table>
+                    <tr>
+                        <th>Section</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Sidebar</strong></td>
+                        <td>Left panel with search, peers list, and conversations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Peers Tab</strong></td>
+                        <td>Shows all users you can connect with</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Messages Tab</strong></td>
+                        <td>Shows your conversation history</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chat Area</strong></td>
+                        <td>Right panel where messages appear</td>
+                    </tr>
+                </table>
+                
+                <div class="card info">
+                    <h4>Status Indicators</h4>
+                    <ul>
+                        <li><span style="color: #00b894;">●</span> <strong>Green</strong> - User is online</li>
+                        <li><span style="color: #999;">●</span> <strong>Grey</strong> - User is offline</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Connecting with Peers -->
+            <div class="step">
+                <h3><span class="step-number">3</span>Connect with Other Users</h3>
+                
+                <ol>
+                    <li>Make sure you're logged in with one account (e.g., "alice")</li>
+                    <li>Open a <strong>new browser window</strong> or <strong>incognito tab</strong></li>
+                    <li>Login with a different account (e.g., "bob")</li>
+                    <li>In the "Peers" tab, find the other user</li>
+                    <li>Click the "Connect" button next to their name</li>
+                    <li>The other user will see a connection request</li>
+                    <li>Once connected, you can start chatting!</li>
+                </ol>
+                
+                <div class="card warning">
+                    ⚠️ Note: Both users need to be connected to the WebSocket server for real-time messaging.
+                </div>
+            </div>
+            
+            <!-- Sending Messages -->
+            <div class="step">
+                <h3><span class="step-number">4</span>Send Messages</h3>
+                
+                <h4>Starting a Chat</h4>
+                <ol>
+                    <li>Click on a user's name in the Peers list</li>
+                    <li>The chat interface will open on the right</li>
+                    <li>Type your message in the text box</li>
+                    <li>Press Enter or click "Send"</li>
+                </ol>
+                
+                <h4>Message Features</h4>
+                <ul>
+                    <li><strong>Real-time delivery</strong> - Messages appear instantly</li>
+                    <li><strong>Typing indicator</strong> - See when the other person is typing</li>
+                    <li><strong>Message history</strong> - Previous messages are saved</li>
+                    <li><strong>Read receipts</strong> - Messages marked as read automatically</li>
+                </ul>
+            </div>
+            
+            <!-- P2P Connection -->
+            <div class="step">
+                <h3><span class="step-number">5</span>Establish P2P Connection</h3>
+                
+                <p>The P2P button creates a direct peer-to-peer connection for file sharing.</p>
+                
+                <h4>How to Use P2P:</h4>
+                <ol>
+                    <li>Open a chat with a connected user</li>
+                    <li>Click the <strong>"🔗 P2P"</strong> button</li>
+                    <li>Wait for the connection to establish</li>
+                    <li>You'll see "P2P Connected!" when ready</li>
+                </ol>
+                
+                <div class="card success">
+                    <h4>✅ Benefits of P2P Connection:</h4>
+                    <ul>
+                        <li>Direct file transfer without server</li>
+                        <li>Faster for large files</li>
+                        <li>Reduced server load</li>
+                        <li>More secure (data doesn't go through server)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- File Transfer -->
+            <div class="step">
+                <h3><span class="step-number">6</span>Share Files</h3>
+                
+                <h4>Sharing a File:</h4>
+                <ol>
+                    <li>First, establish a P2P connection (see step 5)</li>
+                    <li>Click the <strong>📎</strong> (attach) button</li>
+                    <li>Select a file from your computer</li>
+                        <li>The file will be transferred directly to the other user</li>
+                    <li>Progress will be shown</li>
+                    <li>Once complete, the other user can download the file</li>
+                </ol>
+                
+                <table>
+                    <tr>
+                        <th>File Size</th>
+                        <th>Transfer Method</th>
+                    </tr>
+                    <tr>
+                        <td>Small (<16KB)</td>
+                        <td>Sent as single message</td>
+                    </tr>
+                    <tr>
+                        <td>Large (>16KB)</td>
+                        <td>Chunked transfer with progress</td>
+                    </tr>
+                </table>
+                
+                <div class="card warning">
+                    ⚠️ Maximum file size: 100MB
+                </div>
+            </div>
+            
+            <!-- Managing Connections -->
+            <div class="step">
+                <h3><span class="step-number">7</span>Manage Connections</h3>
+                
+                <h4>Connection Status Types:</h4>
+                <table>
+                    <tr>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>None</td>
+                        <td>Not connected - click "Connect" to send request</td>
+                    </tr>
+                    <tr>
+                        <td>Pending</td>
+                        <td>Waiting for the other user to accept</td>
+                    </tr>
+                    <tr>
+                        <td>Accepted</td>
+                        <td>Connected - can chat and share files</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- Logging Out -->
+            <div class="step">
+                <h3><span class="step-number">8</span>Logout</h3>
+                
+                <p>To logout:</p>
+                <ol>
+                    <li>Click the logout button (🚪) in the top-right corner</li>
+                    <li>You'll be returned to the login page</li>
+                </ol>
+                
+                <div class="card info">
+                    💡 Tip: Your messages are saved even after you logout. They will be there when you login again.
+                </div>
+            </div>
+            
+            <!-- Testing Tips -->
+            <h2>🧪 Testing Tips</h2>
+            
+            <div class="card">
+                <h3>Best Way to Test</h3>
+                <ol>
+                    <li><strong>Open two browser windows</strong> - One for each user</li>
+                    <li><strong>Use different browsers</strong> - Chrome and Firefox work well</li>
+                    <li><strong>Or use incognito mode</strong> - For separate sessions</li>
+                    <li><strong>Check the WebSocket server terminal</strong> - You'll see connection messages</li>
+                </ol>
+            </div>
+            
+            <!-- FAQ -->
+            <h2>❓ Frequently Asked Questions</h2>
+            
+            <table>
+                <tr>
+                    <th>Question</th>
+                    <th>Answer</th>
+                </tr>
+                <tr>
+                    <td>Why aren't messages sending?</td>
+                    <td>Check that both users are online and connected to WebSocket</td>
+                </tr>
+                <tr>
+                    <td>P2P button is greyed out</td>
+                    <td>You must first connect with the user via the Connect button</td>
+                </tr>
+                <tr>
+                    <td>File transfer failed</td>
+                    <td>Make sure P2P connection is established first</td>
+                </tr>
+                <tr>
+                    <td>Can't see other users</td>
+                    <td>Make sure you're logged in and check the Peers tab</td>
+                </tr>
+                <tr>
+                    <td>Online status not updating</td>
+                    <td>Refresh the page - this updates status from the server</td>
+                </tr>
+            </table>
+            
+            <!-- Keyboard Shortcuts -->
+            <h2>⌨️ Keyboard Shortcuts</h2>
+            
+            <table>
+                <tr>
+                    <th>Shortcut</th>
+                    <th>Action</th>
+                </tr>
+                <tr>
+                    <td>Enter</td>
+                    <td>Send message</td>
+                </tr>
+                <tr>
+                    <td>Shift + Enter</td>
+                    <td>New line in message</td>
+                </tr>
+            </table>
+            
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2024 P2P Network Application - Documentation</p>
+    </footer>
+</body>
+</html>
